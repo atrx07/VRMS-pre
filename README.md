@@ -31,56 +31,25 @@ From the repository root:
 javac -d out src/vrms/*.java
 ```
 
-## Run pages for presentation
+## Run any page directly
 
-Customer login:
+```bash
+java -cp out vrms.LoginPage
+java -cp out vrms.RegisterPage
+java -cp out vrms.AdminLoginPage
+java -cp out vrms.CatalogPage
+java -cp out vrms.MyVehiclesPage
+java -cp out vrms.ListVehiclePage
+java -cp out vrms.RentVehiclePage
+java -cp out vrms.MyRentalsPage
+java -cp out vrms.AdminDashboardPage
+java -cp out vrms.AdminApprovalPage
+```
+
+`vrms.Main` also opens the customer login page:
 
 ```bash
 java -cp out vrms.Main
 ```
-
-Main vehicle catalog:
-
-```bash
-java -cp out vrms.CatalogPage
-```
-
-My Vehicles:
-
-```bash
-java -cp out vrms.MyVehiclesPage
-```
-
-List Vehicle:
-
-```bash
-java -cp out vrms.ListVehiclePage
-```
-
-Rent Vehicle:
-
-```bash
-java -cp out vrms.RentVehiclePage
-```
-
-My Rentals:
-
-```bash
-java -cp out vrms.MyRentalsPage
-```
-
-Admin vehicle catalog:
-
-```bash
-java -cp out vrms.AdminDashboardPage
-```
-
-Pending approvals:
-
-```bash
-java -cp out vrms.AdminApprovalPage
-```
-
-Customer registration and admin login are accessible from the login UI.
 
 Java 17 or newer is recommended.
