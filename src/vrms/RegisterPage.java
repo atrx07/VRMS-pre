@@ -55,25 +55,6 @@ public class RegisterPage extends JFrame {
         JButton registerButton = createPrimaryButton("REGISTER");
         registerButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
         registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        registerButton.addActionListener(e -> {
-            String name = nameField.getText().trim();
-            String email = emailField.getText().trim();
-            String phone = phoneField.getText().trim();
-            String password = new String(passwordField.getPassword());
-
-            if (name.isEmpty() || email.isEmpty() || phone.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Please fill in all registration fields.",
-                        "Missing Details",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this,
-                    "Registration UI complete. Account saving will be added in a later phase.",
-                    "VRMS",
-                    JOptionPane.INFORMATION_MESSAGE);
-        });
 
         JButton backButton = new JButton("Back to Login");
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -83,7 +64,6 @@ public class RegisterPage extends JFrame {
         backButton.setForeground(UIColors.LINK);
         backButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
         backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(e -> backToLogin());
 
         root.add(Box.createVerticalStrut(2));
         root.add(registerButton);
@@ -121,13 +101,15 @@ public class RegisterPage extends JFrame {
         button.setOpaque(true);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.setFont(new Font("Segoe UI", Font.BOLD, 13));
         return button;
     }
 
     private void backToLogin() {
-        new LoginPage().setVisible(true);
         dispose();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new RegisterPage().setVisible(true));
     }
 }
