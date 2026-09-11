@@ -4,13 +4,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class LoginPage extends JFrame {
-
-    private final JTextField emailField = new JTextField();
-    private final JPasswordField passwordField = new JPasswordField();
 
     public LoginPage() {
         setTitle("VRMS - Vehicle Rental Management System");
@@ -32,39 +27,14 @@ public class LoginPage extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(42, 38, 30, 38));
 
-        JLabel welcome = new JLabel("Welcome to");
-        welcome.setFont(new Font("Segoe UI", Font.PLAIN, 26));
-        welcome.setForeground(UIColors.TEXT_DARK);
-        welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel brand = new JLabel("VRMS");
-        brand.setFont(new Font("Segoe UI", Font.BOLD, 28));
-        brand.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel subtitle = new JLabel("Vehicle Rental Management System");
-        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        subtitle.setForeground(UIColors.TEXT_MUTED);
-        subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        panel.add(welcome);
-        panel.add(Box.createVerticalStrut(2));
-        panel.add(brand);
+        addCentered(panel, "Welcome to", Font.PLAIN, 26, UIColors.TEXT_DARK);
+        addCentered(panel, "VRMS", Font.BOLD, 28, Color.BLACK);
         panel.add(Box.createVerticalStrut(7));
-        panel.add(subtitle);
+        addCentered(panel, "Vehicle Rental Management System", Font.PLAIN, 11, UIColors.TEXT_MUTED);
         panel.add(Box.createVerticalStrut(34));
-
-        JLabel vehicleText = new JLabel("CAR   |   BIKE   |   VAN");
-        vehicleText.setFont(new Font("Segoe UI", Font.BOLD, 19));
-        vehicleText.setForeground(UIColors.PRIMARY);
-        vehicleText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(vehicleText);
+        addCentered(panel, "CAR   |   BIKE   |   VAN", Font.BOLD, 19, UIColors.PRIMARY);
         panel.add(Box.createVerticalStrut(7));
-
-        JLabel rentalText = new JLabel("VEHICLE RENTAL");
-        rentalText.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        rentalText.setForeground(UIColors.SECONDARY);
-        rentalText.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(rentalText);
+        addCentered(panel, "VEHICLE RENTAL", Font.BOLD, 14, UIColors.SECONDARY);
         panel.add(Box.createVerticalStrut(35));
 
         addFeature(panel, "Browse available vehicles");
@@ -73,21 +43,93 @@ public class LoginPage extends JFrame {
         addFeature(panel, "Manage your rentals");
 
         panel.add(Box.createVerticalGlue());
-
-        JLabel footer = new JLabel("VRMS");
-        footer.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        footer.setForeground(UIColors.SECONDARY);
-        footer.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(footer);
-
+        addCentered(panel, "VRMS", Font.BOLD, 12, UIColors.SECONDARY);
         return panel;
+    }
+
+    private JPanel createLoginArea() {
+        JPanel area = new JPanel(new BorderLayout());
+        area.setBackground(UIColors.BG_PAGE);
+        area.setBorder(new EmptyBorder(40, 45, 18, 32));
+
+        JPanel holder = new JPanel(new GridBagLayout());
+        holder.setOpaque(false);
+        holder.add(createLoginCard());
+        area.add(holder, BorderLayout.CENTER);
+
+        JLabel admin = new JLabel("<html><u>Admin? Sign in here</u></html>");
+        admin.setForeground(UIColors.LINK);
+        admin.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        bottom.setOpaque(false);
+        bottom.add(admin);
+        area.add(bottom, BorderLayout.SOUTH);
+        return area;
+    }
+
+    private JPanel createLoginCard() {
+        JPanel card = new JPanel();
+        card.setPreferredSize(new Dimension(360, 420));
+        card.setBackground(UIColors.CARD_BG);
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(UIColors.BORDER),
+                new EmptyBorder(24, 26, 24, 26)
+        ));
+        card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
+
+        addCentered(card, "CUSTOMER LOGIN", Font.BOLD, 13, Color.BLACK);
+        card.add(Box.createVerticalStrut(14));
+        addCentered(card, "VRMS", Font.BOLD, 18, UIColors.PRIMARY);
+        card.add(Box.createVerticalStrut(10));
+        addCentered(card, "Sign In to Your Account", Font.PLAIN, 18, Color.BLACK);
+        card.add(Box.createVerticalStrut(20));
+
+        JTextField email = new JTextField();
+        JPasswordField password = new JPasswordField();
+        addField(card, "Email", email);
+        addField(card, "Password", password);
+
+        JButton login = primaryButton("LOG IN");
+        login.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
+        login.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(Box.createVerticalStrut(2));
+        card.add(login);
+        card.add(Box.createVerticalStrut(18));
+
+        JLabel signup = new JLabel("<html><u>Don't have an account? Sign Up</u></html>");
+        signup.setForeground(UIColors.LINK);
+        signup.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+        signup.setAlignmentX(Component.CENTER_ALIGNMENT);
+        card.add(signup);
+        return card;
+    }
+
+    private void addField(JPanel panel, String labelText, JComponent field) {
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font("Segoe UI", Font.BOLD, 12));
+        label.setForeground(UIColors.TEXT_DARK);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+        field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
+        field.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        field.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(label);
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(field);
+        panel.add(Box.createVerticalStrut(14));
+    }
+
+    private void addCentered(JPanel panel, String text, int style, int size, Color color) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Segoe UI", style, size));
+        label.setForeground(color);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(label);
     }
 
     private void addFeature(JPanel panel, String text) {
         JPanel row = new JPanel(new BorderLayout(8, 0));
         row.setOpaque(false);
         row.setMaximumSize(new Dimension(254, 26));
-        row.setPreferredSize(new Dimension(254, 26));
         row.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel bullet = new JLabel("\u2022");
@@ -98,200 +140,25 @@ public class LoginPage extends JFrame {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Segoe UI", Font.PLAIN, 13));
         label.setForeground(UIColors.TEXT_DARK);
-
         row.add(bullet, BorderLayout.WEST);
         row.add(label, BorderLayout.CENTER);
         panel.add(row);
         panel.add(Box.createVerticalStrut(9));
     }
 
-    private JPanel createLoginArea() {
-        JPanel area = new JPanel(new BorderLayout());
-        area.setBackground(UIColors.BG_PAGE);
-        area.setBorder(new EmptyBorder(40, 45, 18, 32));
-
-        JPanel centerHolder = new JPanel(new GridBagLayout());
-        centerHolder.setOpaque(false);
-        centerHolder.add(createLoginCard());
-        area.add(centerHolder, BorderLayout.CENTER);
-
-        JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-        bottom.setOpaque(false);
-        JLabel adminLink = createLink("Admin? Sign in here");
-        adminLink.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new AdminLoginPage().setVisible(true);
-                dispose();
-            }
-        });
-        bottom.add(adminLink);
-        area.add(bottom, BorderLayout.SOUTH);
-
-        return area;
-    }
-
-    private JPanel createLoginCard() {
-        JPanel card = new JPanel(new GridBagLayout());
-        card.setPreferredSize(new Dimension(340, 390));
-        card.setBackground(Color.WHITE);
-        card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(UIColors.BORDER),
-                new EmptyBorder(22, 24, 22, 24)
-        ));
-
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.weightx = 1;
-
-        gbc.gridy = 0;
-        card.add(centeredLabel("CUSTOMER LOGIN", Font.BOLD, 13, Color.BLACK), gbc);
-
-        gbc.gridy++;
-        gbc.insets = new Insets(15, 0, 0, 0);
-        card.add(centeredLabel("VRMS", Font.BOLD, 18, UIColors.PRIMARY), gbc);
-
-        gbc.gridy++;
-        gbc.insets = new Insets(12, 0, 19, 0);
-        card.add(centeredLabel("Sign In to Your Account", Font.PLAIN, 18, Color.BLACK), gbc);
-
-        gbc.gridy++;
-        gbc.insets = new Insets(0, 0, 5, 0);
-        card.add(createFieldLabel("Email"), gbc);
-
-        emailField.setPreferredSize(new Dimension(280, 34));
-        emailField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        gbc.gridy++;
-        gbc.insets = new Insets(0, 0, 13, 0);
-        card.add(emailField, gbc);
-
-        gbc.gridy++;
-        gbc.insets = new Insets(0, 0, 5, 0);
-        card.add(createFieldLabel("Password"), gbc);
-
-        passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        passwordField.setEchoChar('\u2022');
-
-        JButton showButton = createSecondaryButton("Show");
-        showButton.addActionListener(e -> togglePassword(showButton));
-
-        gbc.gridy++;
-        gbc.gridwidth = 1;
-        gbc.weightx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0, 0, 18, 8);
-        card.add(passwordField, gbc);
-
-        gbc.gridx = 1;
-        gbc.weightx = 0;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.insets = new Insets(0, 0, 18, 0);
-        card.add(showButton, gbc);
-
-        JButton loginButton = createPrimaryButton("LOG IN");
-        loginButton.addActionListener(e -> login());
-        gbc.gridx = 0;
-        gbc.gridy++;
-        gbc.gridwidth = 2;
-        gbc.weightx = 1;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0, 0, 17, 0);
-        card.add(loginButton, gbc);
-
-        JLabel signUp = createLink("Don't have an account? Sign Up");
-        signUp.setHorizontalAlignment(SwingConstants.CENTER);
-        signUp.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                new RegisterPage().setVisible(true);
-                dispose();
-            }
-        });
-
-        gbc.gridy++;
-        gbc.insets = new Insets(0, 0, 0, 0);
-        card.add(signUp, gbc);
-
-        return card;
-    }
-
-    private JLabel centeredLabel(String text, int style, int size, Color color) {
-        JLabel label = new JLabel(text, SwingConstants.CENTER);
-        label.setFont(new Font("Segoe UI", style, size));
-        label.setForeground(color);
-        return label;
-    }
-
-    private JLabel createFieldLabel(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        label.setForeground(UIColors.TEXT_DARK);
-        return label;
-    }
-
-    private JButton createPrimaryButton(String text) {
+    private JButton primaryButton(String text) {
         JButton button = new JButton(text);
         button.setUI(new BasicButtonUI());
-        button.setPreferredSize(new Dimension(280, 36));
         button.setBackground(UIColors.PRIMARY);
         button.setForeground(Color.WHITE);
         button.setOpaque(true);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.setFont(new Font("Segoe UI", Font.BOLD, 12));
         return button;
     }
 
-    private JButton createSecondaryButton(String text) {
-        JButton button = new JButton(text);
-        button.setUI(new BasicButtonUI());
-        button.setPreferredSize(new Dimension(58, 34));
-        button.setBackground(UIColors.BG_SECONDARY_BTN);
-        button.setForeground(UIColors.TEXT_DARK);
-        button.setOpaque(true);
-        button.setBorder(BorderFactory.createLineBorder(UIColors.BORDER_DARK));
-        button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 11));
-        return button;
-    }
-
-    private JLabel createLink(String text) {
-        JLabel label = new JLabel("<html><u>" + text + "</u></html>");
-        label.setForeground(UIColors.LINK);
-        label.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        return label;
-    }
-
-    private void togglePassword(JButton button) {
-        if (passwordField.getEchoChar() == 0) {
-            passwordField.setEchoChar('\u2022');
-            button.setText("Show");
-        } else {
-            passwordField.setEchoChar((char) 0);
-            button.setText("Hide");
-        }
-    }
-
-    private void login() {
-        String email = emailField.getText().trim();
-        String password = new String(passwordField.getPassword());
-
-        if (email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this,
-                    "Please enter both email and password.",
-                    "Missing Details",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        JOptionPane.showMessageDialog(this,
-                "Login UI complete. Authentication will be added in a later phase.",
-                "VRMS",
-                JOptionPane.INFORMATION_MESSAGE);
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new LoginPage().setVisible(true));
     }
 }
