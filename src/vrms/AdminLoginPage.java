@@ -4,8 +4,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class AdminLoginPage extends JFrame {
 
@@ -13,13 +11,7 @@ public class AdminLoginPage extends JFrame {
         setTitle("VRMS - Admin Login");
         setSize(400, 360);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                backToLogin();
-            }
-        });
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
         JPanel root = new JPanel();
@@ -51,23 +43,6 @@ public class AdminLoginPage extends JFrame {
         JButton loginButton = createPrimaryButton("LOGIN AS ADMIN");
         loginButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
         loginButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        loginButton.addActionListener(e -> {
-            String email = emailField.getText().trim();
-            String password = new String(passwordField.getPassword());
-
-            if (email.isEmpty() || password.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                        "Please enter admin email and password.",
-                        "Missing Details",
-                        JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this,
-                    "Admin login UI complete. Authentication will be added in a later phase.",
-                    "VRMS",
-                    JOptionPane.INFORMATION_MESSAGE);
-        });
 
         JButton backButton = new JButton("Back to Customer Login");
         backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -76,8 +51,6 @@ public class AdminLoginPage extends JFrame {
         backButton.setBorderPainted(false);
         backButton.setForeground(UIColors.LINK);
         backButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        backButton.addActionListener(e -> backToLogin());
 
         root.add(Box.createVerticalStrut(5));
         root.add(loginButton);
@@ -115,13 +88,11 @@ public class AdminLoginPage extends JFrame {
         button.setOpaque(true);
         button.setBorderPainted(false);
         button.setFocusPainted(false);
-        button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         button.setFont(new Font("Segoe UI", Font.BOLD, 13));
         return button;
     }
 
-    private void backToLogin() {
-        new LoginPage().setVisible(true);
-        dispose();
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new AdminLoginPage().setVisible(true));
     }
 }
