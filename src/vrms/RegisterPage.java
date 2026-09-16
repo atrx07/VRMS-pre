@@ -20,7 +20,13 @@ public class RegisterPage extends JFrame {
 
         JLabel title = UIUtils.label("Create Customer Account", Font.BOLD, 22, UIColors.TEXT_DARK);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel subtitle = UIUtils.label("Register to rent or list vehicles on VRMS", Font.PLAIN, 12, UIColors.TEXT_MUTED);
+
+        JLabel subtitle = UIUtils.label(
+                "Register to rent or list vehicles on VRMS",
+                Font.PLAIN,
+                12,
+                UIColors.TEXT_MUTED
+        );
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JTextField name = new JTextField();
@@ -28,7 +34,11 @@ public class RegisterPage extends JFrame {
         JTextField phone = new JTextField();
         JPasswordField password = new JPasswordField();
 
-        root.add(title); root.add(Box.createVerticalStrut(4)); root.add(subtitle); root.add(Box.createVerticalStrut(20));
+        root.add(title);
+        root.add(Box.createVerticalStrut(4));
+        root.add(subtitle);
+        root.add(Box.createVerticalStrut(20));
+
         UIUtils.addField(root, "Name", name);
         UIUtils.addField(root, "Email", email);
         UIUtils.addField(root, "Phone", phone);
@@ -37,12 +47,20 @@ public class RegisterPage extends JFrame {
         JButton register = UIUtils.primaryButton("REGISTER");
         register.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
         register.setAlignmentX(Component.CENTER_ALIGNMENT);
-        register.addActionListener(e -> JOptionPane.showMessageDialog(this,
-                "User registered", "VRMS UI Preview", JOptionPane.INFORMATION_MESSAGE));
+        register.addActionListener(e -> JOptionPane.showMessageDialog(
+                this,
+                "User registered",
+                "VRMS UI Preview",
+                JOptionPane.INFORMATION_MESSAGE
+        ));
+
         JButton back = UIUtils.linkButton("Back to Login");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
         back.addActionListener(e -> UIUtils.showPage(this, new LoginPage()));
-        root.add(register); root.add(Box.createVerticalStrut(15)); root.add(back);
+
+        root.add(register);
+        root.add(Box.createVerticalStrut(15));
+        root.add(back);
     }
 
     public static void main(String[] args) {
