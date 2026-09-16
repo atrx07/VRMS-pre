@@ -61,8 +61,12 @@ public class MyVehiclesPage extends JFrame {
     private JPanel bottom(){
         JPanel bar=new JPanel(new FlowLayout(FlowLayout.RIGHT,10,0)); bar.setOpaque(false);
         bar.add(UIUtils.secondaryButton("Refresh"));
-        JButton list=UIUtils.primaryButton("List Another Vehicle"); list.addActionListener(e->UIUtils.showPage(this,new ListVehiclePage())); bar.add(list);
-        JButton back=UIUtils.secondaryButton("Back to Catalog"); back.addActionListener(e->UIUtils.showPage(this,new CatalogPage())); bar.add(back);
+        JButton list=UIUtils.primaryButton("List Another Vehicle");
+        list.addActionListener(e->UIUtils.previewAction(this,"List Another Vehicle","opens the vehicle listing form"));
+        bar.add(list);
+        JButton back=UIUtils.secondaryButton("Back to Catalog");
+        back.addActionListener(e->UIUtils.showPage(this,new CatalogPage()));
+        bar.add(back);
         return bar;
     }
 
