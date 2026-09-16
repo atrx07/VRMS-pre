@@ -2,126 +2,53 @@ package vrms;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 
 public class RentVehiclePage extends JFrame {
+    private static final String[] SAMPLE = {"1","2","Maruti Swift","Car","KL08AB1234","1500.00","AVAILABLE","APPROVED"};
+    private final String[] vehicle;
+    private final JTextField startField = new JTextField(LocalDate.now().toString());
+    private final JTextField endField = new JTextField(LocalDate.now().plusDays(1).toString());
+    private final JLabel totalLabel = new JLabel("Rental amount: Rs. 0.00");
 
-    public RentVehiclePage() {
-        setTitle("VRMS - Rent Vehicle");
-        setSize(520, 500);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
+    public RentVehiclePage(){ this(SAMPLE); }
 
-        JPanel root = new JPanel();
-        root.setBackground(UIColors.BG_PAGE);
-        root.setBorder(new EmptyBorder(28, 42, 28, 42));
-        root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
-        setContentPane(root);
-
-        JLabel title = new JLabel("Rent Vehicle");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 24));
-        title.setForeground(UIColors.TEXT_DARK);
-        title.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JLabel vehicle = new JLabel("Maruti Swift");
-        vehicle.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        vehicle.setForeground(UIColors.PRIMARY);
-        vehicle.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JLabel owner = small("Listed by Arppith");
-        JLabel rate = new JLabel("Rs. 1500.00 / day");
-        rate.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        rate.setForeground(UIColors.TEXT_DARK);
-        rate.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        root.add(title);
-        root.add(Box.createVerticalStrut(18));
-        root.add(vehicle);
-        root.add(Box.createVerticalStrut(4));
-        root.add(owner);
-        root.add(Box.createVerticalStrut(4));
-        root.add(rate);
-        root.add(Box.createVerticalStrut(24));
-
-        addField(root, "Start Date (YYYY-MM-DD)", "2026-09-12");
-        addField(root, "End Date (YYYY-MM-DD)", "2026-09-14");
-
-        JButton calculate = secondaryButton("Calculate Total");
-        calculate.setAlignmentX(Component.LEFT_ALIGNMENT);
-        root.add(calculate);
-        root.add(Box.createVerticalStrut(18));
-
-        JLabel total = new JLabel("Total: Rs. 3000.00");
-        total.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        total.setForeground(UIColors.PRIMARY);
-        total.setAlignmentX(Component.LEFT_ALIGNMENT);
-        root.add(total);
-        root.add(Box.createVerticalGlue());
-
-        JPanel actions = new JPanel(new GridLayout(1, 2, 10, 0));
-        actions.setOpaque(false);
-        actions.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
-        actions.setAlignmentX(Component.LEFT_ALIGNMENT);
-        actions.add(secondaryButton("Back"));
-        actions.add(primaryButton("Confirm Rental"));
-        root.add(actions);
+    public RentVehiclePage(String[] vehicle){
+        this.vehicle=vehicle;
+        setTitle("VRMS - Rent Vehicle"); setSize(520,520); setLocationRelativeTo(null); setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); setResizable(false);
+        JPanel root=new JPanel(); root.setBackground(UIColors.BG_PAGE); root.setBorder(new EmptyBorder(28,42,28,42)); root.setLayout(new BoxLayout(root,BoxLayout.Y_AXIS)); setContentPane(root);
+        JLabel title=UIUtils.label("Rent Vehicle",Font.BOLD,24,UIColors.TEXT_DARK); title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JLabel name=UIUtils.label(vehicle[2],Font.BOLD,20,UIColors.PRIMARY); name.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JLabel owner=UIUtils.label("Listed by Alwin KJ",Font.PLAIN,12,UIColors.TEXT_MUTED); owner.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JLabel rate=UIUtils.label("Rs. "+vehicle[5]+" / day",Font.BOLD,16,UIColors.TEXT_DARK); rate.setAlignmentX(Component.LEFT_ALIGNMENT);
+        root.add(title); root.add(Box.createVerticalStrut(18)); root.add(name); root.add(Box.createVerticalStrut(4)); root.add(owner); root.add(Box.createVerticalStrut(4)); root.add(rate); root.add(Box.createVerticalStrut(24));
+        UIUtils.addField(root,"Start Date (YYYY-MM-DD)",startField); UIUtils.addField(root,"End Date (YYYY-MM-DD)",endField);
+        JButton calc=UIUtils.secondaryButton("Calculate Rental"); calc.setAlignmentX(Component.LEFT_ALIGNMENT); calc.addActionListener(e->calculate()); root.add(calc); root.add(Box.createVerticalStrut(15));
+        totalLabel.setFont(new Font("Segoe UI",Font.BOLD,18)); totalLabel.setForeground(UIColors.PRIMARY); totalLabel.setAlignmentX(Component.LEFT_ALIGNMENT); root.add(totalLabel);
+        JLabel fee=UIUtils.label("A 10% VRMS service fee is added on the payment page.",Font.PLAIN,11,UIColors.TEXT_MUTED); fee.setAlignmentX(Component.LEFT_ALIGNMENT); root.add(Box.createVerticalStrut(5)); root.add(fee); root.add(Box.createVerticalGlue());
+        JPanel actions=new JPanel(new GridLayout(1,2,10,0)); actions.setOpaque(false); actions.setMaximumSize(new Dimension(Integer.MAX_VALUE,40)); actions.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JButton back=UIUtils.secondaryButton("Back"); back.addActionListener(e->UIUtils.showPage(this,new CatalogPage()));
+        JButton pay=UIUtils.primaryButton("Continue to Payment"); pay.addActionListener(e->openPayment()); actions.add(back); actions.add(pay); root.add(actions);
+        calculate();
     }
 
-    private JLabel small(String text) {
-        JLabel label = new JLabel(text);
-        label.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        label.setForeground(UIColors.TEXT_MUTED);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        return label;
+    private double amount(){
+        LocalDate start=LocalDate.parse(startField.getText().trim()); LocalDate end=LocalDate.parse(endField.getText().trim());
+        if(end.isBefore(start)) throw new IllegalArgumentException();
+        long days=ChronoUnit.DAYS.between(start,end)+1; return days*Double.parseDouble(vehicle[5]);
     }
-
-    private void addField(JPanel panel, String labelText, String value) {
-        JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        label.setForeground(UIColors.TEXT_DARK);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        JTextField field = new JTextField(value);
-        field.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        field.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
-        field.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        panel.add(label);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(field);
-        panel.add(Box.createVerticalStrut(15));
+    private void calculate(){
+        try{ totalLabel.setText(String.format("Rental amount: Rs. %.2f",amount())); }
+        catch(Exception ex){ totalLabel.setText("Rental amount: enter valid dates"); }
     }
-
-    private JButton primaryButton(String text) {
-        JButton button = new JButton(text);
-        button.setUI(new BasicButtonUI());
-        button.setBackground(UIColors.PRIMARY);
-        button.setForeground(Color.WHITE);
-        button.setOpaque(true);
-        button.setBorder(new EmptyBorder(9, 14, 9, 14));
-        button.setFocusPainted(false);
-        button.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        return button;
+    private void openPayment(){
+        try{
+            LocalDate start=LocalDate.parse(startField.getText().trim()); LocalDate end=LocalDate.parse(endField.getText().trim()); if(end.isBefore(start)) throw new IllegalArgumentException();
+            UIUtils.showPage(this,new PaymentPage(vehicle,start,end));
+        }catch(DateTimeParseException|IllegalArgumentException ex){ JOptionPane.showMessageDialog(this,"Enter a valid date range in YYYY-MM-DD format.","Invalid Date",JOptionPane.WARNING_MESSAGE); }
     }
-
-    private JButton secondaryButton(String text) {
-        JButton button = new JButton(text);
-        button.setUI(new BasicButtonUI());
-        button.setBackground(UIColors.BG_SECONDARY_BTN);
-        button.setForeground(UIColors.TEXT_DARK);
-        button.setOpaque(true);
-        button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(UIColors.BORDER_DARK),
-                new EmptyBorder(8, 14, 8, 14)
-        ));
-        button.setFocusPainted(false);
-        button.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        return button;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new RentVehiclePage().setVisible(true));
-    }
+    public static void main(String[] args){ SwingUtilities.invokeLater(()->new RentVehiclePage().setVisible(true)); }
 }

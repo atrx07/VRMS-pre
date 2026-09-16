@@ -14,14 +14,10 @@ public class UIColors {
     public static final Color BORDER = new Color(218, 223, 230);
     public static final Color BORDER_DARK = new Color(205, 211, 218);
     public static final Color LINK = new Color(54, 122, 196);
-
     public static final Color SUCCESS = new Color(35, 128, 78);
     public static final Color SUCCESS_BG = new Color(226, 246, 235);
     public static final Color WARNING = new Color(155, 102, 0);
     public static final Color WARNING_BG = new Color(255, 244, 204);
     public static final Color DANGER = new Color(181, 55, 55);
     public static final Color DANGER_BG = new Color(252, 232, 232);
-
-    private UIColors() {
-    }
 }

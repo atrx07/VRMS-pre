@@ -2,111 +2,47 @@ package vrms;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class RegisterPage extends JFrame {
-
     public RegisterPage() {
         setTitle("VRMS - Customer Registration");
         setSize(460, 510);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                backToLogin();
-            }
-        });
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         JPanel root = new JPanel();
         root.setBackground(UIColors.BG_PAGE);
         root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
-        root.setBorder(new EmptyBorder(28, 45, 22, 45));
+        root.setBorder(new EmptyBorder(25, 45, 20, 45));
         setContentPane(root);
 
-        JLabel title = new JLabel("Create Customer Account");
-        title.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        JLabel title = UIUtils.label("Create Customer Account", Font.BOLD, 22, UIColors.TEXT_DARK);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel subtitle = new JLabel("Register to rent or list vehicles on VRMS");
-        subtitle.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        subtitle.setForeground(UIColors.TEXT_MUTED);
+        JLabel subtitle = UIUtils.label("Register to rent or list vehicles on VRMS", Font.PLAIN, 12, UIColors.TEXT_MUTED);
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JTextField nameField = new JTextField();
-        JTextField emailField = new JTextField();
-        JTextField phoneField = new JTextField();
-        JPasswordField passwordField = new JPasswordField();
+        JTextField name = new JTextField("Arppith Andrews");
+        JTextField email = new JTextField("customer@vrms.com");
+        JTextField phone = new JTextField("9876543210");
+        JPasswordField password = new JPasswordField("password");
 
-        root.add(title);
-        root.add(Box.createVerticalStrut(6));
-        root.add(subtitle);
-        root.add(Box.createVerticalStrut(28));
+        root.add(title); root.add(Box.createVerticalStrut(4)); root.add(subtitle); root.add(Box.createVerticalStrut(20));
+        UIUtils.addField(root, "Name", name);
+        UIUtils.addField(root, "Email", email);
+        UIUtils.addField(root, "Phone", phone);
+        UIUtils.addField(root, "Password", password);
 
-        addField(root, "Name", nameField);
-        addField(root, "Email", emailField);
-        addField(root, "Phone", phoneField);
-        addField(root, "Password", passwordField);
-
-        JButton registerButton = createPrimaryButton("REGISTER");
-        registerButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
-        registerButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JButton backButton = new JButton("Back to Login");
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.setFocusPainted(false);
-        backButton.setContentAreaFilled(false);
-        backButton.setBorderPainted(false);
-        backButton.setForeground(UIColors.LINK);
-        backButton.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        backButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-
-        root.add(Box.createVerticalStrut(2));
-        root.add(registerButton);
-        root.add(Box.createVerticalStrut(14));
-        root.add(backButton);
-    }
-
-    private void addField(JPanel panel, String labelText, JComponent field) {
-        JLabel label = new JLabel(labelText);
-        label.setFont(new Font("Segoe UI", Font.BOLD, 12));
-        label.setForeground(UIColors.TEXT_DARK);
-
-        JPanel labelWrapper = new JPanel(new BorderLayout());
-        labelWrapper.setOpaque(false);
-        labelWrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, 20));
-        labelWrapper.add(label, BorderLayout.WEST);
-
-        JPanel fieldWrapper = new JPanel(new BorderLayout());
-        fieldWrapper.setOpaque(false);
-        fieldWrapper.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
-        field.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        fieldWrapper.add(field, BorderLayout.CENTER);
-
-        panel.add(labelWrapper);
-        panel.add(Box.createVerticalStrut(3));
-        panel.add(fieldWrapper);
-        panel.add(Box.createVerticalStrut(13));
-    }
-
-    private JButton createPrimaryButton(String text) {
-        JButton button = new JButton(text);
-        button.setUI(new BasicButtonUI());
-        button.setBackground(UIColors.PRIMARY);
-        button.setForeground(Color.WHITE);
-        button.setOpaque(true);
-        button.setBorderPainted(false);
-        button.setFocusPainted(false);
-        button.setFont(new Font("Segoe UI", Font.BOLD, 13));
-        return button;
-    }
-
-    private void backToLogin() {
-        dispose();
+        JButton register = UIUtils.primaryButton("REGISTER");
+        register.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
+        register.setAlignmentX(Component.CENTER_ALIGNMENT);
+        register.addActionListener(e -> JOptionPane.showMessageDialog(this,
+                "Sample registration screen only.", "VRMS UI Preview", JOptionPane.INFORMATION_MESSAGE));
+        JButton back = UIUtils.linkButton("Back to Login");
+        back.setAlignmentX(Component.CENTER_ALIGNMENT);
+        back.addActionListener(e -> UIUtils.showPage(this, new LoginPage()));
+        root.add(register); root.add(Box.createVerticalStrut(15)); root.add(back);
     }
 
     public static void main(String[] args) {

@@ -1,10 +1,12 @@
 # VRMS - Vehicle Rental Management System
 
-UI-only first submission for the Vehicle Rental Management System micro project.
+UI-only presentation repository for the Vehicle Rental Management System micro project.
 
-## Scope of this submission
+## Scope
 
-This repository contains the complete planned Swing interface without the storage/business implementation used in the full project.
+This repository mirrors the current pages and visual design of the main `VRMS-project` repository, but uses static sample data instead of the storage and business-logic layer.
+
+It is intended for the early design / presentation stage, so every screen can be opened directly without creating accounts, vehicle records, rentals, or payment data first.
 
 Included pages:
 
@@ -15,13 +17,14 @@ Included pages:
 - My Vehicles
 - List Vehicle
 - Rent Vehicle
+- Payment
 - My Rentals
+- Profile
 - Admin Vehicle Catalog
 - Pending Vehicle Approvals
+- Admin Earnings
 
-The catalog and management pages use static sample data only so the complete UI can be presented without a database, local-file storage, authentication backend, rental processing, or approval logic.
-
-Buttons are included for presentation. Backend actions are intentionally not required for this submission.
+The buttons are present for presentation and basic screen-to-screen navigation. Actions that would normally change persistent data display preview messages only.
 
 ## Compile
 
@@ -41,12 +44,15 @@ java -cp out vrms.CatalogPage
 java -cp out vrms.MyVehiclesPage
 java -cp out vrms.ListVehiclePage
 java -cp out vrms.RentVehiclePage
+java -cp out vrms.PaymentPage
 java -cp out vrms.MyRentalsPage
+java -cp out vrms.ProfilePage
 java -cp out vrms.AdminDashboardPage
 java -cp out vrms.AdminApprovalPage
+java -cp out vrms.AdminEarningsPage
 ```
 
-`vrms.Main` also opens the customer login page:
+`vrms.Main` opens the customer login page:
 
 ```bash
 java -cp out vrms.Main
