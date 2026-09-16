@@ -38,7 +38,7 @@ public class AdminLoginPage extends JFrame {
         JButton login = UIUtils.primaryButton("LOGIN AS ADMIN");
         login.setPreferredSize(new Dimension(CONTROL_WIDTH, 36));
         login.setMaximumSize(new Dimension(CONTROL_WIDTH, 36));
-        login.setAlignmentX(Component.LEFT_ALIGNMENT);
+        login.setAlignmentX(Component.CENTER_ALIGNMENT);
         login.addActionListener(e -> UIUtils.showPage(this, new AdminDashboardPage()));
 
         JButton back = UIUtils.linkButton("Back to Customer Login");
@@ -51,6 +51,13 @@ public class AdminLoginPage extends JFrame {
     }
 
     private void addAlignedField(JPanel panel, String labelText, JComponent field) {
+        JPanel fieldGroup = new JPanel();
+        fieldGroup.setOpaque(false);
+        fieldGroup.setLayout(new BoxLayout(fieldGroup, BoxLayout.Y_AXIS));
+        fieldGroup.setPreferredSize(new Dimension(CONTROL_WIDTH, 56));
+        fieldGroup.setMaximumSize(new Dimension(CONTROL_WIDTH, 56));
+        fieldGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel label = UIUtils.label(labelText, Font.BOLD, 12, UIColors.TEXT_DARK);
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
 
@@ -59,9 +66,11 @@ public class AdminLoginPage extends JFrame {
         field.setMaximumSize(new Dimension(CONTROL_WIDTH, 36));
         field.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        panel.add(label);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(field);
+        fieldGroup.add(label);
+        fieldGroup.add(Box.createVerticalStrut(5));
+        fieldGroup.add(field);
+
+        panel.add(fieldGroup);
         panel.add(Box.createVerticalStrut(15));
     }
 
