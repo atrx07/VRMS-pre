@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class AdminLoginPage extends JFrame {
+    private static final int CONTROL_WIDTH = 310;
+
     public AdminLoginPage() {
         setTitle("VRMS - Admin Login");
         setSize(400, 360);
@@ -25,18 +27,42 @@ public class AdminLoginPage extends JFrame {
         JTextField email = new JTextField("admin@vrms.com");
         JPasswordField password = new JPasswordField("admin123");
 
-        root.add(title); root.add(Box.createVerticalStrut(4)); root.add(brand); root.add(Box.createVerticalStrut(20));
-        UIUtils.addField(root, "Admin Email", email);
-        UIUtils.addField(root, "Password", password);
+        root.add(title);
+        root.add(Box.createVerticalStrut(4));
+        root.add(brand);
+        root.add(Box.createVerticalStrut(20));
+
+        addAlignedField(root, "Admin Email", email);
+        addAlignedField(root, "Password", password);
 
         JButton login = UIUtils.primaryButton("LOGIN AS ADMIN");
-        login.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
-        login.setAlignmentX(Component.CENTER_ALIGNMENT);
+        login.setPreferredSize(new Dimension(CONTROL_WIDTH, 36));
+        login.setMaximumSize(new Dimension(CONTROL_WIDTH, 36));
+        login.setAlignmentX(Component.LEFT_ALIGNMENT);
         login.addActionListener(e -> UIUtils.showPage(this, new AdminDashboardPage()));
+
         JButton back = UIUtils.linkButton("Back to Customer Login");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
         back.addActionListener(e -> UIUtils.showPage(this, new LoginPage()));
-        root.add(login); root.add(Box.createVerticalStrut(15)); root.add(back);
+
+        root.add(login);
+        root.add(Box.createVerticalStrut(15));
+        root.add(back);
+    }
+
+    private void addAlignedField(JPanel panel, String labelText, JComponent field) {
+        JLabel label = UIUtils.label(labelText, Font.BOLD, 12, UIColors.TEXT_DARK);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        field.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        field.setPreferredSize(new Dimension(CONTROL_WIDTH, 36));
+        field.setMaximumSize(new Dimension(CONTROL_WIDTH, 36));
+        field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        panel.add(label);
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(field);
+        panel.add(Box.createVerticalStrut(15));
     }
 
     public static void main(String[] args) {
