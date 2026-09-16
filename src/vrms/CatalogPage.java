@@ -54,16 +54,16 @@ public class CatalogPage extends JFrame {
         menu.setBorder(BorderFactory.createLineBorder(UIColors.BORDER_DARK));
         JMenuItem refresh = menuItem("Refresh Catalog");
         JMenuItem rentals = menuItem("My Rentals");
-        rentals.addActionListener(e -> UIUtils.showPage(this, new MyRentalsPage()));
+        rentals.addActionListener(e -> UIUtils.previewAction(this, "My Rentals", "opens the customer's rental history and active rentals"));
         JMenuItem vehicles = menuItem("My Vehicles");
-        vehicles.addActionListener(e -> UIUtils.showPage(this, new MyVehiclesPage()));
+        vehicles.addActionListener(e -> UIUtils.previewAction(this, "My Vehicles", "opens the customer's vehicle listings and their approval status"));
         JMenuItem list = menuItem("List Vehicle");
-        list.addActionListener(e -> UIUtils.showPage(this, new ListVehiclePage()));
+        list.addActionListener(e -> UIUtils.previewAction(this, "List Vehicle", "opens the form for submitting a vehicle listing for admin approval"));
         JMenuItem profile = menuItem("Profile");
-        profile.addActionListener(e -> UIUtils.showPage(this, new ProfilePage()));
+        profile.addActionListener(e -> UIUtils.previewAction(this, "Profile", "opens the customer's profile details"));
         JMenuItem logout = menuItem("Logout");
         logout.setForeground(UIColors.DANGER);
-        logout.addActionListener(e -> UIUtils.showPage(this, new LoginPage()));
+        logout.addActionListener(e -> UIUtils.previewAction(this, "Logout", "ends the current session and returns to the login screen"));
         menu.add(refresh); menu.addSeparator(); menu.add(rentals); menu.add(vehicles); menu.add(list); menu.add(profile);
         menu.addSeparator(); menu.add(logout);
         return menu;
@@ -148,7 +148,7 @@ public class CatalogPage extends JFrame {
 
         JButton action = own ? UIUtils.secondaryButton("Your Listing") : UIUtils.primaryButton("Rent Vehicle");
         if (own) action.setEnabled(false);
-        else action.addActionListener(e -> UIUtils.showPage(this, new RentVehiclePage()));
+        else action.addActionListener(e -> UIUtils.previewAction(this, "Rent Vehicle", "opens the rental details screen for the selected vehicle"));
         card.add(action, BorderLayout.SOUTH);
         return card;
     }
