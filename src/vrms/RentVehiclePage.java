@@ -4,14 +4,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 public class RentVehiclePage extends JFrame {
     private static final String[] SAMPLE = {"1","2","Maruti Swift","Car","KL08AB1234","1500.00","AVAILABLE","APPROVED"};
     private final String[] vehicle;
-    private final JTextField startField = new JTextField(LocalDate.now().toString());
-    private final JTextField endField = new JTextField(LocalDate.now().plusDays(1).toString());
+    private final JTextField startField = new JTextField();
+    private final JTextField endField = new JTextField();
     private final JLabel totalLabel = new JLabel("Rental amount: Rs. 0.00");
 
     public RentVehiclePage(){ this(SAMPLE); }
@@ -31,8 +30,7 @@ public class RentVehiclePage extends JFrame {
         JLabel fee=UIUtils.label("A 10% VRMS service fee is added on the payment page.",Font.PLAIN,11,UIColors.TEXT_MUTED); fee.setAlignmentX(Component.LEFT_ALIGNMENT); root.add(Box.createVerticalStrut(5)); root.add(fee); root.add(Box.createVerticalGlue());
         JPanel actions=new JPanel(new GridLayout(1,2,10,0)); actions.setOpaque(false); actions.setMaximumSize(new Dimension(Integer.MAX_VALUE,40)); actions.setAlignmentX(Component.LEFT_ALIGNMENT);
         JButton back=UIUtils.secondaryButton("Back"); back.addActionListener(e->UIUtils.showPage(this,new CatalogPage()));
-        JButton pay=UIUtils.primaryButton("Continue to Payment"); pay.addActionListener(e->openPayment()); actions.add(back); actions.add(pay); root.add(actions);
-        calculate();
+        JButton pay=UIUtils.primaryButton("Continue to Payment"); pay.addActionListener(e->UIUtils.previewAction(this,"Continue to Payment","opens the payment summary for the selected rental dates")); actions.add(back); actions.add(pay); root.add(actions);
     }
 
     private double amount(){
@@ -43,12 +41,6 @@ public class RentVehiclePage extends JFrame {
     private void calculate(){
         try{ totalLabel.setText(String.format("Rental amount: Rs. %.2f",amount())); }
         catch(Exception ex){ totalLabel.setText("Rental amount: enter valid dates"); }
-    }
-    private void openPayment(){
-        try{
-            LocalDate start=LocalDate.parse(startField.getText().trim()); LocalDate end=LocalDate.parse(endField.getText().trim()); if(end.isBefore(start)) throw new IllegalArgumentException();
-            UIUtils.showPage(this,new PaymentPage(vehicle,start,end));
-        }catch(DateTimeParseException|IllegalArgumentException ex){ JOptionPane.showMessageDialog(this,"Enter a valid date range in YYYY-MM-DD format.","Invalid Date",JOptionPane.WARNING_MESSAGE); }
     }
     public static void main(String[] args){ SwingUtilities.invokeLater(()->new RentVehiclePage().setVisible(true)); }
 }
