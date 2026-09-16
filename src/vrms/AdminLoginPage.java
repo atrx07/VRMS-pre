@@ -24,8 +24,8 @@ public class AdminLoginPage extends JFrame {
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JLabel brand = UIUtils.label("VRMS", Font.BOLD, 16, UIColors.PRIMARY);
         brand.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JTextField email = new JTextField("admin@vrms.com");
-        JPasswordField password = new JPasswordField("admin123");
+        JTextField email = new JTextField();
+        JPasswordField password = new JPasswordField();
 
         root.add(title);
         root.add(Box.createVerticalStrut(4));
@@ -39,7 +39,7 @@ public class AdminLoginPage extends JFrame {
         login.setPreferredSize(new Dimension(CONTROL_WIDTH, 36));
         login.setMaximumSize(new Dimension(CONTROL_WIDTH, 36));
         login.setAlignmentX(Component.CENTER_ALIGNMENT);
-        login.addActionListener(e -> UIUtils.showPage(this, new AdminDashboardPage()));
+        login.addActionListener(e -> UIUtils.previewAction(this, "LOGIN AS ADMIN", "signs the administrator in and opens the admin vehicle catalog"));
 
         JButton back = UIUtils.linkButton("Back to Customer Login");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
