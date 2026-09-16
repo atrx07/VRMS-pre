@@ -27,7 +27,7 @@ public class PaymentPage extends JFrame {
         root.add(title); root.add(Box.createVerticalStrut(4)); root.add(sub); root.add(Box.createVerticalStrut(22)); root.add(summary()); root.add(Box.createVerticalGlue());
         JPanel actions=new JPanel(new GridLayout(1,2,10,0)); actions.setOpaque(false); actions.setMaximumSize(new Dimension(Integer.MAX_VALUE,42)); actions.setAlignmentX(Component.LEFT_ALIGNMENT);
         JButton back=UIUtils.secondaryButton("Back"); back.addActionListener(e->UIUtils.showPage(this,new RentVehiclePage(vehicle)));
-        JButton pay=UIUtils.primaryButton(String.format("PAY Rs. %.2f",total)); pay.addActionListener(e->{JOptionPane.showMessageDialog(this,"Payment successful. Rental confirmed.","VRMS UI Preview",JOptionPane.INFORMATION_MESSAGE); UIUtils.showPage(this,new MyRentalsPage());});
+        JButton pay=UIUtils.primaryButton(String.format("PAY Rs. %.2f",total)); pay.addActionListener(e->UIUtils.previewAction(this,"PAY","confirms the payment and creates the rental"));
         actions.add(back); actions.add(pay); root.add(actions);
     }
 
