@@ -28,21 +28,39 @@ public class CatalogPage extends JFrame {
         JPanel textPanel = new JPanel();
         textPanel.setOpaque(false);
         textPanel.setLayout(new BoxLayout(textPanel, BoxLayout.Y_AXIS));
+
         JLabel title = UIUtils.label("Available Vehicles", Font.BOLD, 28, UIColors.TEXT_DARK);
-        JLabel welcome = UIUtils.label("Welcome, Arppith  |  Pick a vehicle that works for you", Font.PLAIN, 13, UIColors.TEXT_MUTED);
-        textPanel.add(title); textPanel.add(Box.createVerticalStrut(4)); textPanel.add(welcome);
+        JLabel welcome = UIUtils.label(
+                "Welcome, Arppith  |  Pick a vehicle that works for you",
+                Font.PLAIN,
+                13,
+                UIColors.TEXT_MUTED
+        );
+
+        textPanel.add(title);
+        textPanel.add(Box.createVerticalStrut(4));
+        textPanel.add(welcome);
 
         JPanel right = new JPanel();
         right.setOpaque(false);
         right.setLayout(new BoxLayout(right, BoxLayout.X_AXIS));
+
         JLabel brand = UIUtils.label("VRMS", Font.BOLD, 20, UIColors.PRIMARY);
         brand.setAlignmentY(Component.CENTER_ALIGNMENT);
+
         JButton menuButton = createMenuButton();
         menuButton.setAlignmentY(Component.CENTER_ALIGNMENT);
+
         JPopupMenu menu = createCustomerMenu();
-        menuButton.addActionListener(e -> menu.show(menuButton,
-                menuButton.getWidth() - menu.getPreferredSize().width, menuButton.getHeight() + 4));
-        right.add(brand); right.add(Box.createHorizontalStrut(18)); right.add(menuButton);
+        menuButton.addActionListener(e -> menu.show(
+                menuButton,
+                menuButton.getWidth() - menu.getPreferredSize().width,
+                menuButton.getHeight() + 4
+        ));
+
+        right.add(brand);
+        right.add(Box.createHorizontalStrut(18));
+        right.add(menuButton);
 
         header.add(textPanel, BorderLayout.WEST);
         header.add(right, BorderLayout.EAST);
@@ -52,20 +70,53 @@ public class CatalogPage extends JFrame {
     private JPopupMenu createCustomerMenu() {
         JPopupMenu menu = new JPopupMenu();
         menu.setBorder(BorderFactory.createLineBorder(UIColors.BORDER_DARK));
+
         JMenuItem refresh = menuItem("Refresh Catalog");
+
         JMenuItem rentals = menuItem("My Rentals");
-        rentals.addActionListener(e -> UIUtils.previewAction(this, "My Rentals", "opens the customer's rental history and active rentals"));
+        rentals.addActionListener(e -> UIUtils.previewAction(
+                this,
+                "My Rentals",
+                "opens the customer's rental history and active rentals"
+        ));
+
         JMenuItem vehicles = menuItem("My Vehicles");
-        vehicles.addActionListener(e -> UIUtils.previewAction(this, "My Vehicles", "opens the customer's vehicle listings and their approval status"));
+        vehicles.addActionListener(e -> UIUtils.previewAction(
+                this,
+                "My Vehicles",
+                "opens the customer's vehicle listings and their approval status"
+        ));
+
         JMenuItem list = menuItem("List Vehicle");
-        list.addActionListener(e -> UIUtils.previewAction(this, "List Vehicle", "opens the form for submitting a vehicle listing for admin approval"));
+        list.addActionListener(e -> UIUtils.previewAction(
+                this,
+                "List Vehicle",
+                "opens the form for submitting a vehicle listing for admin approval"
+        ));
+
         JMenuItem profile = menuItem("Profile");
-        profile.addActionListener(e -> UIUtils.previewAction(this, "Profile", "opens the customer's profile details"));
+        profile.addActionListener(e -> UIUtils.previewAction(
+                this,
+                "Profile",
+                "opens the customer's profile details"
+        ));
+
         JMenuItem logout = menuItem("Logout");
         logout.setForeground(UIColors.DANGER);
-        logout.addActionListener(e -> UIUtils.previewAction(this, "Logout", "ends the current session and returns to the login screen"));
-        menu.add(refresh); menu.addSeparator(); menu.add(rentals); menu.add(vehicles); menu.add(list); menu.add(profile);
-        menu.addSeparator(); menu.add(logout);
+        logout.addActionListener(e -> UIUtils.previewAction(
+                this,
+                "Logout",
+                "ends the current session and returns to the login screen"
+        ));
+
+        menu.add(refresh);
+        menu.addSeparator();
+        menu.add(rentals);
+        menu.add(vehicles);
+        menu.add(list);
+        menu.add(profile);
+        menu.addSeparator();
+        menu.add(logout);
         return menu;
     }
 
@@ -86,14 +137,25 @@ public class CatalogPage extends JFrame {
         button.setForeground(UIColors.PRIMARY);
         button.setOpaque(true);
         button.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(UIColors.PRIMARY, 2), new EmptyBorder(8, 13, 8, 13)));
+                BorderFactory.createLineBorder(UIColors.PRIMARY, 2),
+                new EmptyBorder(8, 13, 8, 13)
+        ));
         button.setFocusPainted(false);
         button.setFont(new Font("Segoe UI", Font.BOLD, 12));
         button.setHorizontalTextPosition(SwingConstants.LEFT);
         button.setIconTextGap(9);
         button.setIcon(new Icon() {
-            public int getIconWidth() { return 18; }
-            public int getIconHeight() { return 14; }
+            @Override
+            public int getIconWidth() {
+                return 18;
+            }
+
+            @Override
+            public int getIconHeight() {
+                return 14;
+            }
+
+            @Override
             public void paintIcon(Component c, Graphics g, int x, int y) {
                 Graphics2D g2 = (Graphics2D) g.create();
                 g2.setColor(UIColors.PRIMARY);
@@ -113,9 +175,11 @@ public class CatalogPage extends JFrame {
         grid.add(vehicleCard("CAR", "Maruti Swift", "Alwin KJ", "KL08AB1234", "1500.00", false));
         grid.add(vehicleCard("BIKE", "Honda Activa", "Amal Farhan", "KL45CD5678", "500.00", false));
         grid.add(vehicleCard("CAR", "Toyota Innova", "Arppith Andrews", "KL07EF2468", "2200.00", true));
+
         JPanel holder = new JPanel(new BorderLayout());
         holder.setBackground(UIColors.BG_PAGE);
         holder.add(grid, BorderLayout.NORTH);
+
         JScrollPane scroll = new JScrollPane(holder);
         scroll.setBorder(null);
         scroll.getViewport().setBackground(UIColors.BG_PAGE);
@@ -123,12 +187,22 @@ public class CatalogPage extends JFrame {
         return scroll;
     }
 
-    private JPanel vehicleCard(String type, String name, String owner, String registration, String rate, boolean own) {
+    private JPanel vehicleCard(
+            String type,
+            String name,
+            String owner,
+            String registration,
+            String rate,
+            boolean own
+    ) {
         JPanel card = new JPanel(new BorderLayout(0, 12));
         card.setBackground(UIColors.CARD_BG);
         card.setPreferredSize(new Dimension(310, 255));
-        card.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLineBorder(UIColors.BORDER),
-                new EmptyBorder(18, 18, 16, 18)));
+        card.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(UIColors.BORDER),
+                new EmptyBorder(18, 18, 16, 18)
+        ));
+
         JPanel top = new JPanel(new BorderLayout());
         top.setOpaque(false);
         top.add(UIUtils.badge(type, UIColors.BG_LEFT, UIColors.PRIMARY), BorderLayout.WEST);
@@ -138,17 +212,52 @@ public class CatalogPage extends JFrame {
         JPanel details = new JPanel();
         details.setOpaque(false);
         details.setLayout(new BoxLayout(details, BoxLayout.Y_AXIS));
-        JLabel n = UIUtils.label(name, Font.BOLD, 20, UIColors.TEXT_DARK); n.setAlignmentX(Component.LEFT_ALIGNMENT);
-        JLabel o = UIUtils.label("Listed by " + owner + (own ? " (You)" : ""), Font.PLAIN, 12, UIColors.TEXT_MUTED); o.setAlignmentX(Component.LEFT_ALIGNMENT);
-        JLabel r = UIUtils.label("Registration  " + registration, Font.PLAIN, 12, UIColors.TEXT_MUTED); r.setAlignmentX(Component.LEFT_ALIGNMENT);
-        JLabel p = UIUtils.label("Rs. " + rate + " / day", Font.BOLD, 17, UIColors.PRIMARY); p.setAlignmentX(Component.LEFT_ALIGNMENT);
-        details.add(n); details.add(Box.createVerticalStrut(7)); details.add(o); details.add(Box.createVerticalStrut(4)); details.add(r);
-        details.add(Box.createVerticalStrut(14)); details.add(p);
+
+        JLabel n = UIUtils.label(name, Font.BOLD, 20, UIColors.TEXT_DARK);
+        n.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel o = UIUtils.label(
+                "Listed by " + owner + (own ? " (You)" : ""),
+                Font.PLAIN,
+                12,
+                UIColors.TEXT_MUTED
+        );
+        o.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel r = UIUtils.label(
+                "Registration  " + registration,
+                Font.PLAIN,
+                12,
+                UIColors.TEXT_MUTED
+        );
+        r.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel p = UIUtils.label("Rs. " + rate + " / day", Font.BOLD, 17, UIColors.PRIMARY);
+        p.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        details.add(n);
+        details.add(Box.createVerticalStrut(7));
+        details.add(o);
+        details.add(Box.createVerticalStrut(4));
+        details.add(r);
+        details.add(Box.createVerticalStrut(14));
+        details.add(p);
         card.add(details, BorderLayout.CENTER);
 
-        JButton action = own ? UIUtils.secondaryButton("Your Listing") : UIUtils.primaryButton("Rent Vehicle");
-        if (own) action.setEnabled(false);
-        else action.addActionListener(e -> UIUtils.previewAction(this, "Rent Vehicle", "opens the rental details screen for the selected vehicle"));
+        JButton action = own
+                ? UIUtils.secondaryButton("Your Listing")
+                : UIUtils.primaryButton("Rent Vehicle");
+
+        if (own) {
+            action.setEnabled(false);
+        } else {
+            action.addActionListener(e -> UIUtils.previewAction(
+                    this,
+                    "Rent Vehicle",
+                    "opens the rental details screen for the selected vehicle"
+            ));
+        }
+
         card.add(action, BorderLayout.SOUTH);
         return card;
     }
