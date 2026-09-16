@@ -23,10 +23,10 @@ public class RegisterPage extends JFrame {
         JLabel subtitle = UIUtils.label("Register to rent or list vehicles on VRMS", Font.PLAIN, 12, UIColors.TEXT_MUTED);
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JTextField name = new JTextField("Arppith Andrews");
-        JTextField email = new JTextField("customer@vrms.com");
-        JTextField phone = new JTextField("9876543210");
-        JPasswordField password = new JPasswordField("password");
+        JTextField name = new JTextField();
+        JTextField email = new JTextField();
+        JTextField phone = new JTextField();
+        JPasswordField password = new JPasswordField();
 
         root.add(title); root.add(Box.createVerticalStrut(4)); root.add(subtitle); root.add(Box.createVerticalStrut(20));
         UIUtils.addField(root, "Name", name);
@@ -38,7 +38,7 @@ public class RegisterPage extends JFrame {
         register.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
         register.setAlignmentX(Component.CENTER_ALIGNMENT);
         register.addActionListener(e -> JOptionPane.showMessageDialog(this,
-                "Sample registration screen only.", "VRMS UI Preview", JOptionPane.INFORMATION_MESSAGE));
+                "User registered", "VRMS UI Preview", JOptionPane.INFORMATION_MESSAGE));
         JButton back = UIUtils.linkButton("Back to Login");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
         back.addActionListener(e -> UIUtils.showPage(this, new LoginPage()));
