@@ -91,6 +91,15 @@ final class UIUtils {
         panel.add(Box.createVerticalStrut(15));
     }
 
+    static void previewAction(Component parent, String controlName, String finalPurpose) {
+        JOptionPane.showMessageDialog(
+                parent,
+                controlName + " pressed.\nIn the final product, this " + finalPurpose + ".",
+                "VRMS UI Preview",
+                JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
     static void showPage(JFrame current, JFrame next) {
         next.setVisible(true);
         if (current != null) current.dispose();
