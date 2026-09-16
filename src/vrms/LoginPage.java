@@ -32,9 +32,16 @@ public class LoginPage extends JFrame {
 
         JLabel welcome = UIUtils.label("Welcome to", Font.PLAIN, 18, UIColors.TEXT_DARK);
         welcome.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel brand = UIUtils.label("VRMS", Font.BOLD, 28, Color.BLACK);
         brand.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel subtitle = UIUtils.label("Vehicle Rental Management System", Font.PLAIN, 11, UIColors.TEXT_MUTED);
+
+        JLabel subtitle = UIUtils.label(
+                "Vehicle Rental Management System",
+                Font.PLAIN,
+                11,
+                UIColors.TEXT_MUTED
+        );
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel.add(welcome);
@@ -44,10 +51,17 @@ public class LoginPage extends JFrame {
         panel.add(subtitle);
         panel.add(Box.createVerticalStrut(34));
 
-        JLabel vehicleText = UIUtils.label("CAR   |   BIKE   |   VAN", Font.BOLD, 16, UIColors.PRIMARY);
+        JLabel vehicleText = UIUtils.label(
+                "CAR   |   BIKE   |   VAN",
+                Font.BOLD,
+                16,
+                UIColors.PRIMARY
+        );
         vehicleText.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel rentalText = UIUtils.label("VEHICLE RENTAL", Font.BOLD, 12, UIColors.SECONDARY);
         rentalText.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         panel.add(vehicleText);
         panel.add(Box.createVerticalStrut(7));
         panel.add(rentalText);
@@ -70,8 +84,10 @@ public class LoginPage extends JFrame {
         row.setOpaque(false);
         row.setMaximumSize(new Dimension(254, 26));
         row.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         JLabel bullet = UIUtils.label("\u2022", Font.BOLD, 14, UIColors.PRIMARY);
         bullet.setPreferredSize(new Dimension(14, 26));
+
         row.add(bullet, BorderLayout.WEST);
         row.add(UIUtils.label(text, Font.PLAIN, 13, UIColors.TEXT_DARK), BorderLayout.CENTER);
         panel.add(row);
@@ -90,15 +106,22 @@ public class LoginPage extends JFrame {
 
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         bottom.setOpaque(false);
+
         JLabel adminLink = new JLabel("<html><u>Admin? Sign in here</u></html>");
         adminLink.setForeground(UIColors.LINK);
         adminLink.setFont(new Font("Segoe UI", Font.PLAIN, 11));
         adminLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         adminLink.addMouseListener(new MouseAdapter() {
-            @Override public void mouseClicked(MouseEvent e) {
-                UIUtils.previewAction(LoginPage.this, "Admin sign-in link", "opens the administrator login screen");
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                UIUtils.previewAction(
+                        LoginPage.this,
+                        "Admin sign-in link",
+                        "opens the administrator login screen"
+                );
             }
         });
+
         bottom.add(adminLink);
         area.add(bottom, BorderLayout.SOUTH);
         return area;
@@ -109,7 +132,9 @@ public class LoginPage extends JFrame {
         card.setPreferredSize(new Dimension(360, 420));
         card.setBackground(Color.WHITE);
         card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(UIColors.BORDER), new EmptyBorder(25, 30, 25, 30)));
+                BorderFactory.createLineBorder(UIColors.BORDER),
+                new EmptyBorder(25, 30, 25, 30)
+        ));
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -120,36 +145,57 @@ public class LoginPage extends JFrame {
         JLabel type = UIUtils.label("CUSTOMER LOGIN", Font.BOLD, 11, Color.BLACK);
         type.setHorizontalAlignment(SwingConstants.CENTER);
         card.add(type, gbc);
-        gbc.gridy++; gbc.insets = new Insets(8, 0, 0, 0);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(8, 0, 0, 0);
         JLabel brand = UIUtils.label("VRMS", Font.BOLD, 24, UIColors.PRIMARY);
         brand.setHorizontalAlignment(SwingConstants.CENTER);
         card.add(brand, gbc);
-        gbc.gridy++; gbc.insets = new Insets(4, 0, 25, 0);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(4, 0, 25, 0);
         JLabel heading = UIUtils.label("Sign In to Your Account", Font.PLAIN, 16, Color.BLACK);
         heading.setHorizontalAlignment(SwingConstants.CENTER);
         card.add(heading, gbc);
 
-        gbc.gridy++; gbc.insets = new Insets(0, 0, 5, 0);
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 5, 0);
         card.add(UIUtils.label("Email", Font.BOLD, 12, UIColors.TEXT_DARK), gbc);
-        gbc.gridy++; gbc.insets = new Insets(0, 0, 15, 0);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 15, 0);
         emailField.setPreferredSize(new Dimension(280, 38));
         card.add(emailField, gbc);
-        gbc.gridy++; gbc.insets = new Insets(0, 0, 5, 0);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 5, 0);
         card.add(UIUtils.label("Password", Font.BOLD, 12, UIColors.TEXT_DARK), gbc);
-        gbc.gridy++; gbc.insets = new Insets(0, 0, 25, 0);
+
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 25, 0);
         passwordField.setPreferredSize(new Dimension(280, 38));
         passwordField.setEchoChar('\u2022');
         card.add(passwordField, gbc);
 
-        gbc.gridy++; gbc.insets = new Insets(0, 0, 20, 0);
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 20, 0);
         JButton login = UIUtils.primaryButton("LOG IN");
         login.setPreferredSize(new Dimension(280, 42));
-        login.addActionListener(e -> UIUtils.previewAction(this, "LOG IN", "signs the customer in and opens the vehicle catalog"));
+        login.addActionListener(e -> UIUtils.previewAction(
+                this,
+                "LOG IN",
+                "signs the customer in and opens the vehicle catalog"
+        ));
         card.add(login, gbc);
 
-        gbc.gridy++; gbc.insets = new Insets(0, 0, 0, 0);
+        gbc.gridy++;
+        gbc.insets = new Insets(0, 0, 0, 0);
         JButton register = UIUtils.linkButton("Don't have an account? Sign Up");
-        register.addActionListener(e -> UIUtils.previewAction(this, "Sign Up", "opens the customer registration screen"));
+        register.addActionListener(e -> UIUtils.previewAction(
+                this,
+                "Sign Up",
+                "opens the customer registration screen"
+        ));
         card.add(register, gbc);
         return card;
     }
