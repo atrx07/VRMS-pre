@@ -11,10 +11,10 @@ public class ListVehiclePage extends JFrame {
         JLabel title=UIUtils.label("List Your Vehicle",Font.BOLD,23,UIColors.TEXT_DARK); title.setAlignmentX(Component.CENTER_ALIGNMENT);
         JLabel sub=UIUtils.label("New listings require admin approval",Font.PLAIN,12,UIColors.TEXT_MUTED); sub.setAlignmentX(Component.CENTER_ALIGNMENT);
         root.add(title); root.add(Box.createVerticalStrut(4)); root.add(sub); root.add(Box.createVerticalStrut(24));
-        JTextField name=new JTextField("Honda City"); JComboBox<String> type=new JComboBox<>(new String[]{"Car","Bike","Van"}); JTextField reg=new JTextField("KL08AA1234"); JTextField price=new JTextField("1800");
+        JTextField name=new JTextField(); JComboBox<String> type=new JComboBox<>(new String[]{"Car","Bike","Van"}); JTextField reg=new JTextField(); JTextField price=new JTextField();
         UIUtils.addField(root,"Vehicle Name",name); UIUtils.addField(root,"Vehicle Type",type); UIUtils.addField(root,"Registration Number",reg); UIUtils.addField(root,"Price Per Day (Rs.)",price);
         JButton submit=UIUtils.primaryButton("SUBMIT FOR APPROVAL"); submit.setMaximumSize(new Dimension(Integer.MAX_VALUE,38)); submit.setAlignmentX(Component.CENTER_ALIGNMENT);
-        submit.addActionListener(e->JOptionPane.showMessageDialog(this,"Vehicle submitted for admin approval.","VRMS UI Preview",JOptionPane.INFORMATION_MESSAGE));
+        submit.addActionListener(e->UIUtils.previewAction(this,"SUBMIT FOR APPROVAL","sends the vehicle listing to the administrator for review"));
         JButton back=UIUtils.linkButton("Back to Catalog"); back.setAlignmentX(Component.CENTER_ALIGNMENT); back.addActionListener(e->UIUtils.showPage(this,new CatalogPage()));
         root.add(submit); root.add(Box.createVerticalStrut(15)); root.add(back);
     }
