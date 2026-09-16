@@ -7,8 +7,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class LoginPage extends JFrame {
-    private final JTextField emailField = new JTextField("customer@vrms.com");
-    private final JPasswordField passwordField = new JPasswordField("password");
+    private final JTextField emailField = new JTextField();
+    private final JPasswordField passwordField = new JPasswordField();
 
     public LoginPage() {
         setTitle("VRMS - Vehicle Rental Management System");
@@ -96,7 +96,7 @@ public class LoginPage extends JFrame {
         adminLink.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         adminLink.addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) {
-                UIUtils.showPage(LoginPage.this, new AdminLoginPage());
+                UIUtils.previewAction(LoginPage.this, "Admin sign-in link", "opens the administrator login screen");
             }
         });
         bottom.add(adminLink);
@@ -144,12 +144,12 @@ public class LoginPage extends JFrame {
         gbc.gridy++; gbc.insets = new Insets(0, 0, 20, 0);
         JButton login = UIUtils.primaryButton("LOG IN");
         login.setPreferredSize(new Dimension(280, 42));
-        login.addActionListener(e -> UIUtils.showPage(this, new CatalogPage()));
+        login.addActionListener(e -> UIUtils.previewAction(this, "LOG IN", "signs the customer in and opens the vehicle catalog"));
         card.add(login, gbc);
 
         gbc.gridy++; gbc.insets = new Insets(0, 0, 0, 0);
         JButton register = UIUtils.linkButton("Don't have an account? Sign Up");
-        register.addActionListener(e -> UIUtils.showPage(this, new RegisterPage()));
+        register.addActionListener(e -> UIUtils.previewAction(this, "Sign Up", "opens the customer registration screen"));
         card.add(register, gbc);
         return card;
     }
