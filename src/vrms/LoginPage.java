@@ -114,11 +114,7 @@ public class LoginPage extends JFrame {
         adminLink.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                UIUtils.previewAction(
-                        LoginPage.this,
-                        "Admin sign-in link",
-                        "opens the administrator login screen"
-                );
+                UIUtils.info(LoginPage.this, "Admin login opened");
             }
         });
 
@@ -181,23 +177,30 @@ public class LoginPage extends JFrame {
         gbc.insets = new Insets(0, 0, 20, 0);
         JButton login = UIUtils.primaryButton("LOG IN");
         login.setPreferredSize(new Dimension(280, 42));
-        login.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "LOG IN",
-                "signs the customer in and opens the vehicle catalog"
-        ));
+        login.addActionListener(e -> login());
         card.add(login, gbc);
 
         gbc.gridy++;
         gbc.insets = new Insets(0, 0, 0, 0);
         JButton register = UIUtils.linkButton("Don't have an account? Sign Up");
-        register.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Sign Up",
-                "opens the customer registration screen"
-        ));
+        register.addActionListener(e -> UIUtils.info(this, "Registration opened"));
         card.add(register, gbc);
         return card;
+    }
+
+    private void login() {
+        String email = emailField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
+
+        if (email.isEmpty() && password.isEmpty()) {
+            UIUtils.error(this, "Enter email and password");
+        } else if (email.isEmpty()) {
+            UIUtils.error(this, "Enter email");
+        } else if (password.isEmpty()) {
+            UIUtils.error(this, "Enter password");
+        } else {
+            UIUtils.info(this, "Logged in");
+        }
     }
 
     public static void main(String[] args) {
