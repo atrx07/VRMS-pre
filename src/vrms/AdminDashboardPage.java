@@ -129,12 +129,7 @@ public class AdminDashboardPage extends JFrame {
         );
         deleteButton.setEnabled(deletable);
         if (deletable) {
-            deleteButton.addActionListener(e -> JOptionPane.showMessageDialog(
-                    this,
-                    "Delete Vehicle pressed.\nIn the final product, this removes the vehicle from the active catalog while preserving its history.",
-                    "VRMS UI Preview",
-                    JOptionPane.INFORMATION_MESSAGE
-            ));
+            deleteButton.addActionListener(e -> UIUtils.info(this, "Vehicle deleted"));
         }
         card.add(deleteButton, BorderLayout.SOUTH);
         return card;
@@ -143,22 +138,17 @@ public class AdminDashboardPage extends JFrame {
     private JPanel bottom() {
         JPanel bar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         bar.setOpaque(false);
-        bar.add(UIUtils.secondaryButton("Refresh"));
+
+        JButton refresh = UIUtils.secondaryButton("Refresh");
+        refresh.addActionListener(e -> UIUtils.info(this, "Refreshed"));
+        bar.add(refresh);
 
         JButton earnings = UIUtils.secondaryButton("Earnings");
-        earnings.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Earnings",
-                "opens the VRMS earnings and payment summary"
-        ));
+        earnings.addActionListener(e -> UIUtils.info(this, "Earnings opened"));
         bar.add(earnings);
 
         JButton pending = UIUtils.secondaryButton("Pending Requests");
-        pending.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Pending Requests",
-                "opens the pending vehicle approval list"
-        ));
+        pending.addActionListener(e -> UIUtils.info(this, "Requests opened"));
 
         JPanel pendingControl = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
         pendingControl.setOpaque(false);
@@ -167,11 +157,7 @@ public class AdminDashboardPage extends JFrame {
         bar.add(pendingControl);
 
         JButton logout = UIUtils.secondaryButton("Logout");
-        logout.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Logout",
-                "ends the admin session and returns to the login screen"
-        ));
+        logout.addActionListener(e -> UIUtils.info(this, "Logged out"));
         bar.add(logout);
         return bar;
     }
