@@ -25,39 +25,9 @@ public class MyRentalsPage extends JFrame {
     private JScrollPane cards() {
         JPanel grid = new JPanel(new GridLayout(0, 3, 16, 16));
         grid.setOpaque(false);
-        grid.add(card(
-                "ACTIVE",
-                "Maruti Swift",
-                "Alwin KJ",
-                "2026-09-16",
-                "2026-09-18",
-                "4500.00",
-                "450.00",
-                "4950.00",
-                false
-        ));
-        grid.add(card(
-                "RETURNED",
-                "Honda Activa",
-                "Amal Farhan",
-                "2026-09-08",
-                "2026-09-09",
-                "1000.00",
-                "100.00",
-                "1100.00",
-                false
-        ));
-        grid.add(card(
-                "RETURNED",
-                "Hyundai i20",
-                "Dharshak T Jayan",
-                "2026-08-24",
-                "2026-08-26",
-                "4800.00",
-                "480.00",
-                "5280.00",
-                true
-        ));
+        grid.add(card("ACTIVE", "Maruti Swift", "Alwin KJ", "2026-09-16", "2026-09-18", "4500.00", "450.00", "4950.00", false));
+        grid.add(card("RETURNED", "Honda Activa", "Amal Farhan", "2026-09-08", "2026-09-09", "1000.00", "100.00", "1100.00", false));
+        grid.add(card("RETURNED", "Hyundai i20", "Dharshak T Jayan", "2026-08-24", "2026-08-26", "4800.00", "480.00", "5280.00", true));
 
         JPanel holder = new JPanel(new BorderLayout());
         holder.setBackground(UIColors.BG_PAGE);
@@ -122,12 +92,7 @@ public class MyRentalsPage extends JFrame {
         JLabel dates = UIUtils.label(start + "  to  " + end, Font.PLAIN, 12, UIColors.TEXT_MUTED);
         dates.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JLabel rentalLabel = UIUtils.label(
-                "Rental: Rs. " + rental,
-                Font.PLAIN,
-                12,
-                UIColors.TEXT_MUTED
-        );
+        JLabel rentalLabel = UIUtils.label("Rental: Rs. " + rental, Font.PLAIN, 12, UIColors.TEXT_MUTED);
         rentalLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel feeLabel = UIUtils.label("VRMS fee: Rs. " + fee, Font.PLAIN, 12, UIColors.TEXT_MUTED);
@@ -166,12 +131,7 @@ public class MyRentalsPage extends JFrame {
             JButton returnButton = UIUtils.primaryButton("Return Vehicle");
             returnButton.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
             returnButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-            returnButton.addActionListener(e -> JOptionPane.showMessageDialog(
-                    this,
-                    "Vehicle returned in the UI preview.",
-                    "VRMS UI Preview",
-                    JOptionPane.INFORMATION_MESSAGE
-            ));
+            returnButton.addActionListener(e -> UIUtils.info(this, "Vehicle returned"));
             card.add(Box.createVerticalStrut(14));
             card.add(returnButton);
         }
@@ -182,10 +142,13 @@ public class MyRentalsPage extends JFrame {
     private JPanel bottom() {
         JPanel bar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         bar.setOpaque(false);
-        bar.add(UIUtils.secondaryButton("Refresh"));
+
+        JButton refresh = UIUtils.secondaryButton("Refresh");
+        refresh.addActionListener(e -> UIUtils.info(this, "Refreshed"));
+        bar.add(refresh);
 
         JButton back = UIUtils.primaryButton("Back to Catalog");
-        back.addActionListener(e -> UIUtils.showPage(this, new CatalogPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Catalog opened"));
         bar.add(back);
         return bar;
     }
