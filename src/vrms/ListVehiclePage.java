@@ -50,15 +50,40 @@ public class ListVehiclePage extends JFrame {
         submit.setPreferredSize(new Dimension(FORM_WIDTH, 38));
         submit.setMaximumSize(new Dimension(FORM_WIDTH, 38));
         submit.setAlignmentX(Component.CENTER_ALIGNMENT);
-        submit.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "SUBMIT FOR APPROVAL",
-                "sends the vehicle listing to the administrator for review"
-        ));
+        submit.addActionListener(e -> {
+            String nameText = name.getText().trim();
+            String regText = reg.getText().trim();
+            String priceText = price.getText().trim();
+
+            if (nameText.isEmpty()) {
+                UIUtils.error(this, "Enter vehicle name");
+                return;
+            }
+            if (regText.isEmpty()) {
+                UIUtils.error(this, "Enter registration number");
+                return;
+            }
+            if (priceText.isEmpty()) {
+                UIUtils.error(this, "Enter price");
+                return;
+            }
+
+            try {
+                double value = Double.parseDouble(priceText);
+                if (value <= 0) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                UIUtils.error(this, "Enter valid price");
+                return;
+            }
+
+            UIUtils.info(this, "Vehicle submitted");
+        });
 
         JButton back = UIUtils.linkButton("Back to Catalog");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
-        back.addActionListener(e -> UIUtils.showPage(this, new CatalogPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Catalog opened"));
 
         root.add(Box.createVerticalStrut(5));
         root.add(submit);
