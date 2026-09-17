@@ -47,16 +47,23 @@ public class RegisterPage extends JFrame {
         JButton register = UIUtils.primaryButton("REGISTER");
         register.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
         register.setAlignmentX(Component.CENTER_ALIGNMENT);
-        register.addActionListener(e -> JOptionPane.showMessageDialog(
-                this,
-                "User registered",
-                "VRMS UI Preview",
-                JOptionPane.INFORMATION_MESSAGE
-        ));
+        register.addActionListener(e -> {
+            if (name.getText().trim().isEmpty()) {
+                UIUtils.error(this, "Enter name");
+            } else if (email.getText().trim().isEmpty()) {
+                UIUtils.error(this, "Enter email");
+            } else if (phone.getText().trim().isEmpty()) {
+                UIUtils.error(this, "Enter phone");
+            } else if (new String(password.getPassword()).trim().isEmpty()) {
+                UIUtils.error(this, "Enter password");
+            } else {
+                UIUtils.info(this, "User registered");
+            }
+        });
 
         JButton back = UIUtils.linkButton("Back to Login");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
-        back.addActionListener(e -> UIUtils.showPage(this, new LoginPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Login opened"));
 
         root.add(register);
         root.add(Box.createVerticalStrut(15));
