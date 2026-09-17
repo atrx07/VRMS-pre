@@ -5,6 +5,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class RegisterPage extends JFrame {
+    private static final int FORM_WIDTH = 310;
+
     public RegisterPage() {
         setTitle("VRMS - Customer Registration");
         setSize(460, 510);
@@ -39,10 +41,10 @@ public class RegisterPage extends JFrame {
         root.add(subtitle);
         root.add(Box.createVerticalStrut(20));
 
-        UIUtils.addField(root, "Name", name);
-        UIUtils.addField(root, "Email", email);
-        UIUtils.addField(root, "Phone", phone);
-        UIUtils.addField(root, "Password", password);
+        addAlignedField(root, "Name", name);
+        addAlignedField(root, "Email", email);
+        addAlignedField(root, "Phone", phone);
+        addAlignedField(root, "Password", password);
 
         JButton register = UIUtils.primaryButton("REGISTER");
         register.setMaximumSize(new Dimension(Integer.MAX_VALUE, 38));
@@ -68,6 +70,30 @@ public class RegisterPage extends JFrame {
         root.add(register);
         root.add(Box.createVerticalStrut(15));
         root.add(back);
+    }
+
+    private void addAlignedField(JPanel panel, String labelText, JComponent field) {
+        JPanel fieldGroup = new JPanel();
+        fieldGroup.setOpaque(false);
+        fieldGroup.setLayout(new BoxLayout(fieldGroup, BoxLayout.Y_AXIS));
+        fieldGroup.setPreferredSize(new Dimension(FORM_WIDTH, 56));
+        fieldGroup.setMaximumSize(new Dimension(FORM_WIDTH, 56));
+        fieldGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel label = UIUtils.label(labelText, Font.BOLD, 12, UIColors.TEXT_DARK);
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        field.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        field.setPreferredSize(new Dimension(FORM_WIDTH, 34));
+        field.setMaximumSize(new Dimension(FORM_WIDTH, 34));
+        field.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        fieldGroup.add(label);
+        fieldGroup.add(Box.createVerticalStrut(5));
+        fieldGroup.add(field);
+
+        panel.add(fieldGroup);
+        panel.add(Box.createVerticalStrut(12));
     }
 
     public static void main(String[] args) {
