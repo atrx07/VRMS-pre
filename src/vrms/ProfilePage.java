@@ -67,14 +67,20 @@ public class ProfilePage extends JFrame {
         actions.setOpaque(false);
 
         JButton back = UIUtils.secondaryButton("Back to Catalog");
-        back.addActionListener(e -> UIUtils.showPage(this, new CatalogPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Catalog opened"));
 
         JButton save = UIUtils.primaryButton("Save Changes");
-        save.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Save Changes",
-                "updates the customer's profile details"
-        ));
+        save.addActionListener(e -> {
+            if (name.getText().trim().isEmpty()) {
+                UIUtils.error(this, "Enter name");
+            } else if (email.getText().trim().isEmpty()) {
+                UIUtils.error(this, "Enter email");
+            } else if (phone.getText().trim().isEmpty()) {
+                UIUtils.error(this, "Enter phone");
+            } else {
+                UIUtils.info(this, "Profile updated");
+            }
+        });
 
         actions.add(back);
         actions.add(save);
