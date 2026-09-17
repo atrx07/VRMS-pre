@@ -68,14 +68,10 @@ public class PaymentPage extends JFrame {
         actions.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JButton back = UIUtils.secondaryButton("Back");
-        back.addActionListener(e -> UIUtils.showPage(this, new RentVehiclePage(vehicle)));
+        back.addActionListener(e -> UIUtils.info(this, "Rental opened"));
 
         JButton pay = UIUtils.primaryButton(String.format("PAY Rs. %.2f", total));
-        pay.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "PAY",
-                "confirms the payment and creates the rental"
-        ));
+        pay.addActionListener(e -> UIUtils.info(this, "Payment successful"));
 
         actions.add(back);
         actions.add(pay);
