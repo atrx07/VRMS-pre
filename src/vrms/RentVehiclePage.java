@@ -97,7 +97,7 @@ public class RentVehiclePage extends JFrame {
 
         JButton pay = UIUtils.primaryButton("Continue to Payment");
         pay.addActionListener(e -> {
-            if (validateDates() != null) {
+            if (validateDates() == null) {
                 return;
             }
             UIUtils.info(this, "Payment opened");
