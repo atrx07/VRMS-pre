@@ -91,12 +91,21 @@ final class UIUtils {
         panel.add(Box.createVerticalStrut(15));
     }
 
-    static void previewAction(Component parent, String controlName, String finalPurpose) {
+    static void info(Component parent, String message) {
         JOptionPane.showMessageDialog(
                 parent,
-                controlName + " pressed.\nIn the final product, this " + finalPurpose + ".",
-                "VRMS UI Preview",
+                message,
+                "VRMS",
                 JOptionPane.INFORMATION_MESSAGE
+        );
+    }
+
+    static void error(Component parent, String message) {
+        JOptionPane.showMessageDialog(
+                parent,
+                message,
+                "VRMS",
+                JOptionPane.WARNING_MESSAGE
         );
     }
 
