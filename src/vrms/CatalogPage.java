@@ -72,42 +72,23 @@ public class CatalogPage extends JFrame {
         menu.setBorder(BorderFactory.createLineBorder(UIColors.BORDER_DARK));
 
         JMenuItem refresh = menuItem("Refresh Catalog");
+        refresh.addActionListener(e -> UIUtils.info(this, "Refreshed"));
 
         JMenuItem rentals = menuItem("My Rentals");
-        rentals.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "My Rentals",
-                "opens the customer's rental history and active rentals"
-        ));
+        rentals.addActionListener(e -> UIUtils.info(this, "Rentals opened"));
 
         JMenuItem vehicles = menuItem("My Vehicles");
-        vehicles.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "My Vehicles",
-                "opens the customer's vehicle listings and their approval status"
-        ));
+        vehicles.addActionListener(e -> UIUtils.info(this, "Vehicles opened"));
 
         JMenuItem list = menuItem("List Vehicle");
-        list.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "List Vehicle",
-                "opens the form for submitting a vehicle listing for admin approval"
-        ));
+        list.addActionListener(e -> UIUtils.info(this, "Listing opened"));
 
         JMenuItem profile = menuItem("Profile");
-        profile.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Profile",
-                "opens the customer's profile details"
-        ));
+        profile.addActionListener(e -> UIUtils.info(this, "Profile opened"));
 
         JMenuItem logout = menuItem("Logout");
         logout.setForeground(UIColors.DANGER);
-        logout.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Logout",
-                "ends the current session and returns to the login screen"
-        ));
+        logout.addActionListener(e -> UIUtils.info(this, "Logged out"));
 
         menu.add(refresh);
         menu.addSeparator();
@@ -251,11 +232,7 @@ public class CatalogPage extends JFrame {
         if (own) {
             action.setEnabled(false);
         } else {
-            action.addActionListener(e -> UIUtils.previewAction(
-                    this,
-                    "Rent Vehicle",
-                    "opens the rental details screen for the selected vehicle"
-            ));
+            action.addActionListener(e -> UIUtils.info(this, "Rental opened"));
         }
 
         card.add(action, BorderLayout.SOUTH);
