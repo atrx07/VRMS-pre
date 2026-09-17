@@ -39,11 +39,24 @@ public class AdminLoginPage extends JFrame {
         login.setPreferredSize(new Dimension(CONTROL_WIDTH, 36));
         login.setMaximumSize(new Dimension(CONTROL_WIDTH, 36));
         login.setAlignmentX(Component.CENTER_ALIGNMENT);
-        login.addActionListener(e -> UIUtils.previewAction(this, "LOGIN AS ADMIN", "signs the administrator in and opens the admin vehicle catalog"));
+        login.addActionListener(e -> {
+            String emailText = email.getText().trim();
+            String passwordText = new String(password.getPassword()).trim();
+
+            if (emailText.isEmpty() && passwordText.isEmpty()) {
+                UIUtils.error(this, "Enter email and password");
+            } else if (emailText.isEmpty()) {
+                UIUtils.error(this, "Enter email");
+            } else if (passwordText.isEmpty()) {
+                UIUtils.error(this, "Enter password");
+            } else {
+                UIUtils.info(this, "Logged in");
+            }
+        });
 
         JButton back = UIUtils.linkButton("Back to Customer Login");
         back.setAlignmentX(Component.CENTER_ALIGNMENT);
-        back.addActionListener(e -> UIUtils.showPage(this, new LoginPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Customer login opened"));
 
         root.add(login);
         root.add(Box.createVerticalStrut(15));
