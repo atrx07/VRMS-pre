@@ -112,20 +112,10 @@ public class AdminApprovalPage extends JFrame {
         actions.setOpaque(false);
 
         JButton reject = UIUtils.dangerButton("Reject");
-        reject.addActionListener(e -> JOptionPane.showMessageDialog(
-                this,
-                "Vehicle rejected in the UI preview.",
-                "VRMS",
-                JOptionPane.INFORMATION_MESSAGE
-        ));
+        reject.addActionListener(e -> UIUtils.info(this, "Vehicle rejected"));
 
         JButton approve = UIUtils.primaryButton("Approve");
-        approve.addActionListener(e -> JOptionPane.showMessageDialog(
-                this,
-                "Vehicle approved in the UI preview.",
-                "VRMS",
-                JOptionPane.INFORMATION_MESSAGE
-        ));
+        approve.addActionListener(e -> UIUtils.info(this, "Vehicle approved"));
 
         actions.add(reject);
         actions.add(approve);
@@ -136,10 +126,13 @@ public class AdminApprovalPage extends JFrame {
     private JPanel bottom() {
         JPanel bar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         bar.setOpaque(false);
-        bar.add(UIUtils.secondaryButton("Refresh"));
+
+        JButton refresh = UIUtils.secondaryButton("Refresh");
+        refresh.addActionListener(e -> UIUtils.info(this, "Refreshed"));
+        bar.add(refresh);
 
         JButton back = UIUtils.primaryButton("Back to Admin Catalog");
-        back.addActionListener(e -> UIUtils.showPage(this, new AdminDashboardPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Admin catalog opened"));
         bar.add(back);
         return bar;
     }
