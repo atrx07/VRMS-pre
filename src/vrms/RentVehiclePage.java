@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 
 public class RentVehiclePage extends JFrame {
@@ -92,38 +93,58 @@ public class RentVehiclePage extends JFrame {
         actions.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JButton back = UIUtils.secondaryButton("Back");
-        back.addActionListener(e -> UIUtils.showPage(this, new CatalogPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Catalog opened"));
 
         JButton pay = UIUtils.primaryButton("Continue to Payment");
-        pay.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "Continue to Payment",
-                "opens the payment summary for the selected rental dates"
-        ));
+        pay.addActionListener(e -> {
+            if (validateDates() != null) {
+                return;
+            }
+            UIUtils.info(this, "Payment opened");
+        });
 
         actions.add(back);
         actions.add(pay);
         root.add(actions);
     }
 
-    private double amount() {
-        LocalDate start = LocalDate.parse(startField.getText().trim());
-        LocalDate end = LocalDate.parse(endField.getText().trim());
+    private LocalDate[] validateDates() {
+        String startText = startField.getText().trim();
+        String endText = endField.getText().trim();
 
-        if (end.isBefore(start)) {
-            throw new IllegalArgumentException();
+        if (startText.isEmpty()) {
+            UIUtils.error(this, "Enter start date");
+            return null;
+        }
+        if (endText.isEmpty()) {
+            UIUtils.error(this, "Enter end date");
+            return null;
         }
 
-        long days = ChronoUnit.DAYS.between(start, end) + 1;
-        return days * Double.parseDouble(vehicle[5]);
+        try {
+            LocalDate start = LocalDate.parse(startText);
+            LocalDate end = LocalDate.parse(endText);
+            if (end.isBefore(start)) {
+                UIUtils.error(this, "End date is before start date");
+                return null;
+            }
+            return new LocalDate[]{start, end};
+        } catch (DateTimeParseException ex) {
+            UIUtils.error(this, "Enter valid dates");
+            return null;
+        }
     }
 
     private void calculate() {
-        try {
-            totalLabel.setText(String.format("Rental amount: Rs. %.2f", amount()));
-        } catch (Exception ex) {
-            totalLabel.setText("Rental amount: enter valid dates");
+        LocalDate[] dates = validateDates();
+        if (dates == null) {
+            return;
         }
+
+        long days = ChronoUnit.DAYS.between(dates[0], dates[1]) + 1;
+        double amount = days * Double.parseDouble(vehicle[5]);
+        totalLabel.setText(String.format("Rental amount: Rs. %.2f", amount));
+        UIUtils.info(this, "Rent calculated");
     }
 
     public static void main(String[] args) {
