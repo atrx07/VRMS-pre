@@ -40,33 +40,9 @@ public class MyVehiclesPage extends JFrame {
     private JScrollPane cards() {
         JPanel grid = new JPanel(new GridLayout(0, 3, 16, 16));
         grid.setOpaque(false);
-        grid.add(card(
-                "CAR",
-                "APPROVED",
-                "Toyota Innova",
-                "KL07EF2468",
-                "2200.00",
-                "AVAILABLE",
-                false
-        ));
-        grid.add(card(
-                "BIKE",
-                "PENDING",
-                "Yamaha FZ",
-                "KL45XY4321",
-                "800.00",
-                "AVAILABLE",
-                false
-        ));
-        grid.add(card(
-                "CAR",
-                "DELETED BY ADMIN",
-                "Hyundai i20",
-                "KL08ZX9001",
-                "1600.00",
-                "UNAVAILABLE",
-                true
-        ));
+        grid.add(card("CAR", "APPROVED", "Toyota Innova", "KL07EF2468", "2200.00", "AVAILABLE", false));
+        grid.add(card("BIKE", "PENDING", "Yamaha FZ", "KL45XY4321", "800.00", "AVAILABLE", false));
+        grid.add(card("CAR", "DELETED BY ADMIN", "Hyundai i20", "KL08ZX9001", "1600.00", "UNAVAILABLE", true));
 
         JPanel holder = new JPanel(new BorderLayout());
         holder.setBackground(UIColors.BG_PAGE);
@@ -168,18 +144,17 @@ public class MyVehiclesPage extends JFrame {
     private JPanel bottom() {
         JPanel bar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         bar.setOpaque(false);
-        bar.add(UIUtils.secondaryButton("Refresh"));
+
+        JButton refresh = UIUtils.secondaryButton("Refresh");
+        refresh.addActionListener(e -> UIUtils.info(this, "Refreshed"));
+        bar.add(refresh);
 
         JButton list = UIUtils.primaryButton("List Another Vehicle");
-        list.addActionListener(e -> UIUtils.previewAction(
-                this,
-                "List Another Vehicle",
-                "opens the vehicle listing form"
-        ));
+        list.addActionListener(e -> UIUtils.info(this, "Listing opened"));
         bar.add(list);
 
         JButton back = UIUtils.secondaryButton("Back to Catalog");
-        back.addActionListener(e -> UIUtils.showPage(this, new CatalogPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Catalog opened"));
         bar.add(back);
         return bar;
     }
