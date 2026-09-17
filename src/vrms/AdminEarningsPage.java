@@ -141,10 +141,13 @@ public class AdminEarningsPage extends JFrame {
     private JPanel bottom() {
         JPanel bar = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
         bar.setOpaque(false);
-        bar.add(UIUtils.secondaryButton("Refresh"));
+
+        JButton refresh = UIUtils.secondaryButton("Refresh");
+        refresh.addActionListener(e -> UIUtils.info(this, "Refreshed"));
+        bar.add(refresh);
 
         JButton back = UIUtils.primaryButton("Back to Admin Catalog");
-        back.addActionListener(e -> UIUtils.showPage(this, new AdminDashboardPage()));
+        back.addActionListener(e -> UIUtils.info(this, "Admin catalog opened"));
         bar.add(back);
         return bar;
     }
