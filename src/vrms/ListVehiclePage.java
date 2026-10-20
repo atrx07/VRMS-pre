@@ -12,7 +12,8 @@ public class ListVehiclePage extends JFrame {
         setSize(500, 470);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setResizable(false);
+        setResizable(true);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         JPanel root = new JPanel();
         root.setBackground(UIColors.BG_PAGE);
